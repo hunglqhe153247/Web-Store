@@ -68,20 +68,21 @@
 	<h4 class="">Sign in</h4>
 	<p class="">Hello, Welcome to your account.</p>
 	
-	<form class="register-form outer-top-xs" role="form">
+	<form class="register-form outer-top-xs" role="form" action="login" method="POST">
 		<div class="form-group">
 		    <label class="info-title" for="exampleInputEmail1">Email Address <span>*</span></label>
-		    <input type="email" class="form-control unicase-form-control text-input" id="exampleInputEmail1">
+		    <input type="email" class="form-control unicase-form-control text-input" id="exampleInputEmail1" name="email">
+                    
 		</div>
 	  	<div class="form-group">
 		    <label class="info-title" for="exampleInputPassword1">Password <span>*</span></label>
-		    <input type="password" class="form-control unicase-form-control text-input" id="exampleInputPassword1">
+                    <input type="password" class="form-control unicase-form-control text-input" id="exampleInputPassword1" name="password">
 		</div>
 		<div class="radio outer-xs">
 		  	<label>
 		    	<input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">Remember me!
 		  	</label>
-		  	<a href="#" class="forgot-password pull-right">Forgot your Password?</a>
+		  	<a href="#" class="forgot-password pull-right" onclick="confirm('Do you want to reset your password ? A confirm link will be sent to your email')">Forgot your Password?</a>
 		</div>
 	  	<button type="submit" class="btn-upper btn btn-primary checkout-page-button">Login</button>
 	</form>					
@@ -99,19 +100,19 @@
 	  	</div>
         <div class="form-group">
 		    <label class="info-title" for="exampleInputEmail1">Name <span>*</span></label>
-		    <input type="email" class="form-control unicase-form-control text-input" id="exampleInputEmail1">
+		    <input type="name" class="form-control unicase-form-control text-input" id="exampleInputEmail1">
 		</div>
         <div class="form-group">
 		    <label class="info-title" for="exampleInputEmail1">Phone Number <span>*</span></label>
-		    <input type="email" class="form-control unicase-form-control text-input" id="exampleInputEmail1">
+		    <input type="text" class="form-control unicase-form-control text-input" id="exampleInputEmail1">
 		</div>
         <div class="form-group">
 		    <label class="info-title" for="exampleInputEmail1">Password <span>*</span></label>
-		    <input type="email" class="form-control unicase-form-control text-input" id="exampleInputEmail1">
+		    <input type="password" class="form-control unicase-form-control text-input" id="exampleInputEmail1">
 		</div>
          <div class="form-group">
 		    <label class="info-title" for="exampleInputEmail1">Confirm Password <span>*</span></label>
-		    <input type="email" class="form-control unicase-form-control text-input" id="exampleInputEmail1">
+		    <input type="confirm" class="form-control unicase-form-control text-input" id="exampleInputEmail1">
 		</div>
 	  	<button type="submit" class="btn-upper btn btn-primary checkout-page-button">Sign Up</button>
 	</form>
