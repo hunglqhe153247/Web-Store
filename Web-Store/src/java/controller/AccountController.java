@@ -13,14 +13,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import model.Account;
 
 /**
  *
  * @author Hung
  */
-public class login extends HttpServlet {
+public class AccountController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,10 +38,10 @@ public class login extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet login</title>");
+            out.println("<title>Servlet AccountController</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet login at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet AccountController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -60,7 +59,7 @@ public class login extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("login.jsp").include(request, response);
+        processRequest(request, response);
     }
 
     /**
@@ -77,24 +76,29 @@ public class login extends HttpServlet {
         AccountDAO dao = new AccountDAO();
         ArrayList<Account> acc = dao.getAllAccounts();
         String email = request.getParameter("email");
+        String name = request.getParameter("name");
+        String phone = request.getParameter("phone");
         String password = request.getParameter("password");
-        boolean accept = false;
         PrintWriter out = response.getWriter();
+        boolean accept = true;
         for (Account a : acc) {
-            if (a.getEmail().equals(email) && a.getPassword().equals(password)) {
-                HttpSession session = request.getSession();
-                session.setAttribute("Account", a);
-                request.getRequestDispatcher("index.html").forward(request, response);
-                accept = true;
+            if (a.getEmail().equals(email)) {
+                out.println("<script type=\"text/javascript\">");
+                out.println("alert('The current email is already in use by another account. Please choose another email to register.');");
+                
+                out.println("</script>");
+                accept = false;
+                request.getRequestDispatcher("login.jsp").include(request, response);
             }
         }
-        if (accept == false) {
-
+        if (accept == true) {
+            Account a = new Account(email, name, phone, password, phone);
+            dao.insertAccount(a);
             out.println("<script type=\"text/javascript\">");
-            out.println("alert('Email or password incorrect');");
-            out.println("location='login.jsp';");
+            out.println("alert('Create Account successfully');");
+            
             out.println("</script>");
-            request.getRequestDispatcher("login.jsp").forward(request, response);
+            request.getRequestDispatcher("index.html").include(request, response);
         }
     }
 

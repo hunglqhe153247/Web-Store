@@ -40,4 +40,18 @@ public class AccountDAO extends DBContext {
         }
         return acc;
     }
+    public static void insertAccount(Account s) {
+        try {
+            String sql = "INSERT INTO Account VALUES (?, ?, ?, ?, ?);";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, s.getEmail());
+            statement.setString(2, s.getName());
+            statement.setString(3, s.getPhone());
+            statement.setString(4, s.getPassword());
+            statement.setString(5, s.getAddress());
+            statement.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }
