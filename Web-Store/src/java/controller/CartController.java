@@ -5,25 +5,18 @@
  */
 package controller;
 
-import dal.ProductDAO;
-import dal.SaleDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.Category;
-import model.Product;
-import model.Sale;
 
 /**
  *
  * @author Hung
  */
-public class ProductController extends HttpServlet {
+public class CartController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,10 +35,10 @@ public class ProductController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ProductController</title>");            
+            out.println("<title>Servlet CartController</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ProductController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet CartController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -63,18 +56,7 @@ public class ProductController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ProductDAO Pdao = new ProductDAO();
-        SaleDAO Sdao = new SaleDAO();
-        ArrayList<Category> categories = Pdao.getAllCategories();
-        ArrayList<Product> products = Pdao.getAllProducts();
-        ServletContext sc = getServletContext();
-        sc.setAttribute("categories", categories);
-        sc.setAttribute("products", products);
-        ArrayList<Product> newProducts = Pdao.getNewProducts();
-        ArrayList<Sale> sales = Sdao.getAllSales();
-        sc.setAttribute("sales", sales);
-        sc.setAttribute("newProducts", newProducts);
-        request.getRequestDispatcher("home.jsp").include(request, response);
+        processRequest(request, response);
     }
 
     /**

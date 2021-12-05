@@ -63,4 +63,50 @@ public class ProductDAO extends DBContext{
         }
         return categories;
     }
+    public ArrayList<Product> getNewProducts(String Category)
+    {
+        ArrayList<Product> products = new ArrayList<>();
+        try {
+            String sql = "SELECT TOP 10 * FROM [Product] where category= ? ORDER BY id DESC";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, Category);
+            ResultSet rs = stm.executeQuery();
+            
+            while(rs.next())
+            {
+                Product d = new Product();
+                d.setId(rs.getString("id"));
+                d.setName(rs.getString("name"));
+                d.setPrice(rs.getInt("price"));
+                d.setUnit(rs.getString("unit"));
+                d.setCategory(rs.getString("category"));
+                products.add(d);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return products;
+    }
+    public ArrayList<Product> getNewProducts()
+    {
+        ArrayList<Product> products = new ArrayList<>();
+        try {
+            String sql = "SELECT TOP 10 * FROM [Product] ORDER BY id DESC";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+            while(rs.next())
+            {
+                Product d = new Product();
+                d.setId(rs.getString("id"));
+                d.setName(rs.getString("name"));
+                d.setPrice(rs.getInt("price"));
+                d.setUnit(rs.getString("unit"));
+                d.setCategory(rs.getString("category"));
+                products.add(d);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return products;
+    }
 }

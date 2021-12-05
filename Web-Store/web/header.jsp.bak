@@ -1,3 +1,5 @@
+<%@page import="model.Category"%>
+<%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <!DOCTYPE html>
@@ -214,12 +216,19 @@
 				<a href="home.html" data-hover="dropdown" class="dropdown-toggle" data-toggle="dropdown">Home</a>
 				
 			</li>
-			<li class="active dropdown yamm-fw">
+			<%
+				ServletContext sc = getServletContext();
+                                ArrayList<Category> categories = (ArrayList<Category>)sc.getAttribute("categories");
+                                for(Category c : categories){
+
+                        %>
+			<li class="dropdown hidden-sm">
 				
-				<a href="category.html">Health & Beauty
+				<a href="category.html"><%=c.getName()%>
 				    <span class="menu-label new-menu hidden-xs">new</span>
 				</a>
 			</li>
+                        <% } %>
 
 						
 

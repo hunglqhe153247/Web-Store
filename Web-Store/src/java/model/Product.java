@@ -15,17 +15,29 @@ public class Product {
     int price;
     String unit;
     String category;
+    String imagie;
 
     public Product() {
     }
 
-    public Product(String id, String name, int price, String unit, String category) {
+    public Product(String id, String name, int price, String unit, String category, String imagie) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.unit = unit;
         this.category = category;
+        this.imagie = imagie;
     }
+
+    public String getImagie() {
+        return imagie;
+    }
+
+    public void setImagie(String imagie) {
+        this.imagie = imagie;
+    }
+
+
 
     public String getId() {
         return id;
