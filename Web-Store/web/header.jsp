@@ -55,7 +55,7 @@
 					<li><a href="#"><i class="icon fa fa-heart"></i>Wishlist</a></li>
 					<li><a href="#"><i class="icon fa fa-shopping-cart"></i>My Cart</a></li>
 					<li><a href="#"><i class="icon fa fa-check"></i>Checkout</a></li>
-					<li><a href="#"><i class="icon fa fa-lock"></i>Login</a></li>
+					<li><a href="login.jsp"><i class="icon fa fa-lock"></i>Login</a></li>
 				</ul>
 			</div><!-- /.cnt-account -->
 
@@ -193,7 +193,7 @@
 	<div class="nav-outer">
 		<ul class="nav navbar-nav">
 			<li class="active dropdown yamm-fw">
-				<a href="home.html" data-hover="dropdown" class="dropdown-toggle" data-toggle="dropdown">Home</a>
+				<a href="home.jsp" data-hover="dropdown" class="dropdown-toggle" data-toggle="dropdown">Home</a>
 				
 			</li>
 			<%
