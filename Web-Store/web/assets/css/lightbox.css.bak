@@ -3,21 +3,7 @@ body:after {
   content: url(../images/close.png) url(../images/loading.gif) url(../images/prev.png) url(../images/next.png);
   display: none;
 }
-.card button {
-  border: none;
-  outline: 0;
-  padding: 12px;
-  color: white;
-  background-color: #000;
-  text-align: center;
-  cursor: pointer;
-  width: 100%;
-  font-size: 18px;
-}
 
-.card button:hover {
-  opacity: 0.7;
-}
 .lightboxOverlay {
   position: absolute;
   top: 0;

@@ -9,12 +9,14 @@ import dal.ProductDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Collections;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Category;
 import model.Product;
+import model.Review;
 
 /**
  *
@@ -64,8 +66,12 @@ public class CategoryController extends HttpServlet {
         String categoryName = "";
         ProductDAO dao = new ProductDAO();
         ArrayList<Product> productsWithCategory = dao.getProductsWithCategory(category);
+        Collections.sort(productsWithCategory, Product.ProductNameComparatorAsc);
         request.setAttribute("productsWithCategory", productsWithCategory);
+        ArrayList<Review> review = dao.getReview(category);
+        request.setAttribute("review", review);
         ArrayList<Category> categories = (ArrayList<Category>)getServletContext().getAttribute("categories");
+        
         for(Category c:categories){
             if(c.getId().equals(category)){
                 categoryName = c.getName();

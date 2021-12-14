@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 import model.Category;
 
 import model.Product;
+import model.Review;
 
 /**
  *
@@ -37,12 +38,39 @@ public class ProductDAO extends DBContext{
                 d.setUnit(rs.getString("unit"));
                 d.setCategory(rs.getString("category"));
                 d.setImagie(rs.getString("imagie"));
+                d.setDescription(rs.getString("description"));
                 products.add(d);
             }
         } catch (SQLException ex) {
             Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return products;
+    }
+    public Product getProducts(String id)
+    {
+        Product d = new Product();
+        try {
+            String sql = "SELECT * FROM [Product] where id = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, id);
+            ResultSet rs = stm.executeQuery();
+            
+            while(rs.next())
+            {
+                
+                d.setId(rs.getString("id"));
+                d.setName(rs.getString("name"));
+                d.setPrice(rs.getInt("price"));
+                d.setUnit(rs.getString("unit"));
+                d.setCategory(rs.getString("category"));
+                d.setImagie(rs.getString("imagie"));
+                d.setDescription(rs.getString("description"));
+                
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return d;
     }
     public ArrayList<Category> getAllCategories()
     {
@@ -82,6 +110,7 @@ public class ProductDAO extends DBContext{
                 d.setUnit(rs.getString("unit"));
                 d.setCategory(rs.getString("category"));
                 d.setImagie(rs.getString("imagie"));
+                d.setDescription(rs.getString("description"));
                 products.add(d);
             }
         } catch (SQLException ex) {
@@ -105,6 +134,7 @@ public class ProductDAO extends DBContext{
                 d.setUnit(rs.getString("unit"));
                 d.setCategory(rs.getString("category"));
                 d.setImagie(rs.getString("imagie"));
+                d.setDescription(rs.getString("description"));
                 products.add(d);
             }
         } catch (SQLException ex) {
@@ -129,6 +159,31 @@ public class ProductDAO extends DBContext{
                 d.setUnit(rs.getString("unit"));
                 d.setCategory(rs.getString("category"));
                 d.setImagie(rs.getString("imagie"));
+                d.setDescription(rs.getString("description"));
+                products.add(d);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return products;
+    }
+    public ArrayList<Review> getReview(String Category)
+    {
+        ArrayList<Review> products = new ArrayList<>();
+        try {
+            String sql = "SELECT * FROM [Review] where category= ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, Category);
+            ResultSet rs = stm.executeQuery();
+            
+            while(rs.next())
+            {
+                Review d = new Review();
+                d.setId(rs.getString("id"));
+                d.setWriter(rs.getString("writer"));
+                d.setCategory(rs.getString("category"));
+                d.setImagie(rs.getString("imagie"));
+                d.setContent(rs.getString("content"));
                 products.add(d);
             }
         } catch (SQLException ex) {
