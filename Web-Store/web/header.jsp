@@ -71,7 +71,7 @@
 				<div class="col-xs-12 col-sm-12 col-md-3 logo-holder">
 					<!-- ============================================================= LOGO ============================================================= -->
 <div class="logo">
-	<a href="home.html">
+	<a href="home.jsp">
 		
 		<img src="assets\images\logo.png" alt="">
 
@@ -203,10 +203,12 @@
 
                         %>
 			<li class="dropdown hidden-sm">
-				
-				<a href="category.html"><%=c.getName()%>
-				    <span class="menu-label new-menu hidden-xs">new</span>
-				</a>
+                            <% if (c.getId()==categories.get(categories.size()-1).getId()){ %>
+                                <a href="CategoryController?id=<%= c.getId()%>"><%=c.getName()%><span class="menu-label new-menu hidden-xs">new</span></a>
+                                
+                            <% break; }
+                            else %>
+                                <a href="CategoryController?id=<%=c.getId()%>"><%=c.getName()%></a>
 			</li>
                         <% } %>
 

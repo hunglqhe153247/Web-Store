@@ -36,6 +36,7 @@ public class ProductDAO extends DBContext{
                 d.setPrice(rs.getInt("price"));
                 d.setUnit(rs.getString("unit"));
                 d.setCategory(rs.getString("category"));
+                d.setImagie(rs.getString("imagie"));
                 products.add(d);
             }
         } catch (SQLException ex) {
@@ -80,6 +81,7 @@ public class ProductDAO extends DBContext{
                 d.setPrice(rs.getInt("price"));
                 d.setUnit(rs.getString("unit"));
                 d.setCategory(rs.getString("category"));
+                d.setImagie(rs.getString("imagie"));
                 products.add(d);
             }
         } catch (SQLException ex) {
@@ -102,6 +104,31 @@ public class ProductDAO extends DBContext{
                 d.setPrice(rs.getInt("price"));
                 d.setUnit(rs.getString("unit"));
                 d.setCategory(rs.getString("category"));
+                d.setImagie(rs.getString("imagie"));
+                products.add(d);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return products;
+    }
+    public ArrayList<Product> getProductsWithCategory(String category)
+    {
+        ArrayList<Product> products = new ArrayList<>();
+        try {
+            String sql = "SELECT * FROM [Product] where category = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, category);
+            ResultSet rs = stm.executeQuery();
+            while(rs.next())
+            {
+                Product d = new Product();
+                d.setId(rs.getString("id"));
+                d.setName(rs.getString("name"));
+                d.setPrice(rs.getInt("price"));
+                d.setUnit(rs.getString("unit"));
+                d.setCategory(rs.getString("category"));
+                d.setImagie(rs.getString("imagie"));
                 products.add(d);
             }
         } catch (SQLException ex) {
