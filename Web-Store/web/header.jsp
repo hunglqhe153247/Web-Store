@@ -47,17 +47,17 @@
 
     </head>
     <body class="cnt-home">
-        <% Account account = (Account) session.getAttribute("account");
+        <%
             ArrayList<Cart> carth = (ArrayList<Cart>) session.getAttribute("cart");
             ArrayList<Product> productsh = (ArrayList<Product>) getServletContext().getAttribute("products");
             NumberFormat currencyFormatterh = NumberFormat.getCurrencyInstance(new Locale("en", "US"));
-            Account eg = (Account)session.getAttribute("account");
+            Account eg = (Account) session.getAttribute("account");
             float cart_price = 0;
             for (Cart ch : carth) {
                 for (Product productx : productsh) {
                     if (ch.getProduct().equals(productx.getId())) {
 
-                        cart_price += productx.getPrice()*ch.getQuantity();
+                        cart_price += productx.getPrice() * ch.getQuantity();
                     }
                 }
             }
@@ -72,9 +72,9 @@
                         <div class="cnt-account">
                             <ul class="list-unstyled">
 
-                                <li><a href="#"><i class="icon fa fa-shopping-cart"></i>My Cart</a></li>
-                                <li><a href="#"><i class="icon fa fa-check"></i>Checkout</a></li>
-                                <li><a href="login.jsp"><i class="icon fa fa-lock"></i><%=account.getName()%></a></li>
+                                <li><a href="shopping-cart.jsp"><i class="icon fa fa-shopping-cart"></i>My Cart</a></li>
+                                <li><a href="CheckoutController"><i class="icon fa fa-check"></i>Checkout</a></li>
+                                <li><a href="login.jsp"><i class="icon fa fa-lock"></i><%=eg.getName()%></a></li>
                             </ul>
                         </div><!-- /.cnt-account -->
 
@@ -104,13 +104,9 @@
                             <div class="search-area">
                                 <form action='SearchController' method = 'POST'>
                                     <div class="control-group">
-
-
-
-                                        <input type = "text" class="search-field" placeholder="Search here...">
-                                        <input type="submit" value="Search" style="border: none; outline: 0; padding: 12px; color: white; background-color: #fe2; text-align: center; cursor: pointer; width: 100%; font-size: 18px;"/>
-
-
+                                        <input class="search-field" placeholder="Search here..." type="text" name="search" value="">
+                                        
+                                        <input type="submit" value="Search" class="search-button" />
                                     </div>
                                 </form>
                             </div><!-- /.search-area -->
@@ -140,8 +136,8 @@
                                 <ul class="dropdown-menu">
                                     <li>
                                         <% for (Cart ch2 : carth) {
-                                        for (Product productx : productsh) {
-                                        if (ch2.getProduct().equals(productx.getId())) { %>
+                                                for (Product productx : productsh) {
+                                                    if (ch2.getProduct().equals(productx.getId())) {%>
                                         <div class="cart-item product-summary">
                                             <div class="row">
                                                 <div class="col-xs-4">
@@ -152,17 +148,19 @@
                                                 <div class="col-xs-7">
 
                                                     <h3 class="name"><a href="DetailController?id=<%=productx.getId()%>"><%=productx.getName()%></a></h3>
-                                                    <div class="price"><%= currencyFormatterh.format(productx.getPrice()*ch2.getQuantity())%></div>
+                                                    <div class="price"><%= currencyFormatterh.format(productx.getPrice() * ch2.getQuantity())%></div>
                                                 </div>
                                                 <div class="col-xs-1 action">
                                                     <a href="DeleteProductFromCart?id=<%=productx.getId()%>"><i class="fa fa-trash"></i></a>
                                                 </div>
                                             </div>
                                         </div><!-- /.cart-item -->
-                                        
+
                                         <div class="clearfix"></div>
                                         <hr>
-                                        <% } } } %>
+                                        <% }
+                                                }
+                                            }%>
 
                                         <div class="clearfix cart-total">
                                             <div class="pull-right">
@@ -172,7 +170,7 @@
                                             </div>
                                             <div class="clearfix"></div>
 
-                                            <a href="checkout.html" class="btn btn-upper btn-primary btn-block m-t-20">Checkout</a>	
+                                            <a href="CheckoutController" class="btn btn-upper btn-primary btn-block m-t-20">Checkout</a>	
                                         </div><!-- /.cart-total-->
 
 
@@ -218,7 +216,7 @@
                                             <a href="CategoryController?id=<%= c.getId()%>"><%=c.getName()%><span class="menu-label new-menu hidden-xs">new</span></a>
 
                                             <% break;
-                            } else%>
+                                            } else%>
                                             <a href="CategoryController?id=<%=c.getId()%>"><%=c.getName()%></a>
                                         </li>
                                         <% }%>

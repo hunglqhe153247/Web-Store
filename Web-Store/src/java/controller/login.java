@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -60,7 +61,23 @@ public class login extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("login.jsp").include(request, response);
+        Cookie[] cookies = request.getCookies();
+        AccountDAO db = new AccountDAO();
+        if (cookies != null) {
+            for (Cookie cooky : cookies) {
+                if (cooky.getName().equals("email")) {
+                    Account account = db.getAccount(cooky.getValue());
+                    if (account != null) {
+                        HttpSession session = request.getSession();
+                        session.setAttribute("account", account);
+                        request.getRequestDispatcher("home.jsp").forward(request, response);
+                    }
+                }
+            }
+
+        }
+
+        request.getRequestDispatcher("login.jsp").forward(request, response);
     }
 
     /**
@@ -82,6 +99,16 @@ public class login extends HttpServlet {
         PrintWriter out = response.getWriter();
         for (Account a : acc) {
             if (a.getEmail().equals(email) && a.getPassword().equals(password)) {
+                String remember = request.getParameter("remember");
+                if (remember != null) {
+                    Cookie c_user = new Cookie("email", email);
+                    Cookie c_pass = new Cookie("password", password);
+                    c_user.setMaxAge(3600 * 24 * 30);
+                    c_pass.setMaxAge(3600 * 24 * 30);
+                    response.addCookie(c_pass);
+                    response.addCookie(c_user);
+                }
+
                 HttpSession session = request.getSession();
                 session.setAttribute("account", a);
                 request.getRequestDispatcher("/ProductController").forward(request, response);

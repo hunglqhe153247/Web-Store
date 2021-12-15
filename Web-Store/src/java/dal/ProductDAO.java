@@ -46,6 +46,31 @@ public class ProductDAO extends DBContext{
         }
         return products;
     }
+    public ArrayList<Product> searchProduct(String search)
+    {
+        ArrayList<Product> products = new ArrayList<>();
+        try {
+            String sql = "SELECT * FROM [Product] where name like '"+"%"+search+"%'";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            
+            ResultSet rs = stm.executeQuery();
+            while(rs.next())
+            {
+                Product d = new Product();
+                d.setId(rs.getString("id"));
+                d.setName(rs.getString("name"));
+                d.setPrice(rs.getFloat("price"));
+                d.setUnit(rs.getString("unit"));
+                d.setCategory(rs.getString("category"));
+                d.setImagie(rs.getString("imagie"));
+                d.setDescription(rs.getString("description"));
+                products.add(d);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return products;
+    }
     public Product getProducts(String id)
     {
         Product d = new Product();

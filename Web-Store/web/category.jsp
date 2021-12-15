@@ -187,7 +187,7 @@
                           <div class="image"> <a href="DetailController?id=<%=p.getId()%>"><img src="<%=p.getImagie()%>" height="190" width="200" alt=""></a> </div>
                           <!-- /.image -->
                           
-                          <div class="tag new"><span>new</span></div>
+                          
                         </div>
                         <!-- /.product-image -->
                         
@@ -282,7 +282,7 @@
                         <!-- /.col --> 
                       </div>
                       <!-- /.product-list-row -->
-                      <div class="tag new"><span>new</span></div>
+                      
                     </div>
                     <!-- /.product-list --> 
                   </div>

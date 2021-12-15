@@ -214,7 +214,7 @@
                                             <div class="row">
 
                                                 <div class="col-sm-2">
-                                                    <span class="label">Qty :</span>
+                                                    <span class="label">Quantity :</span>
                                                 </div>
 
                                                 <div class="col-sm-2">

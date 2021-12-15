@@ -40,6 +40,30 @@ public class AccountDAO extends DBContext {
         }
         return acc;
     }
+    public Account getAccount(String email)
+    {
+        
+        try {
+            String sql = "SELECT * FROM Account where email=?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, email);
+            ResultSet rs = stm.executeQuery();
+            
+            while(rs.next())
+            {
+                Account d = new Account();
+                d.setEmail(rs.getString("email"));
+                d.setName(rs.getString("name"));
+                d.setPhone(rs.getString("phone"));
+                d.setPassword(rs.getString("password"));
+                d.setAddress(rs.getString("address"));
+                return d;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
     public static void insertAccount(Account s) {
         try {
             String sql = "INSERT INTO Account VALUES (?, ?, ?, ?, ?);";

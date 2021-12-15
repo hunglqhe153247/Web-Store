@@ -99,4 +99,16 @@ public class CartDAO extends DBContext{
             Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    public static void checkout (String customer) {
+        try {
+            String sql = "DELETE FROM cart WHERE customer=?;";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            
+            
+            statement.setString(1, customer);
+            statement.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }
