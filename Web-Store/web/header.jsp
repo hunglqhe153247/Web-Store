@@ -1,3 +1,6 @@
+<%@page import="model.Product"%>
+<%@page import="model.Cart"%>
+<%@page import="model.Account"%>
 <%@page import="model.Category"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -42,6 +45,20 @@
 
 	</head>
     <body class="cnt-home">
+        <% Account account = (Account)session.getAttribute("account");
+            ArrayList<Cart> carth = (ArrayList<Cart>) session.getAttribute("cart");
+            ArrayList<Product> productsh = (ArrayList<Product>) getServletContext().getAttribute("products");
+            
+            float cart_price = 0;
+            for(Cart c:carth){
+                for(Product productx:productsh){
+                    if(c.getProduct().equals(productx.getId())){
+                        
+                        cart_price+=productx.getPrice();
+                    }
+                }
+            }
+        %>
 		<!-- ============================================== HEADER ============================================== -->
 <header class="header-style-1">
 
@@ -51,11 +68,10 @@
 		<div class="header-top-inner">
 			<div class="cnt-account">
 				<ul class="list-unstyled">
-					<li><a href="#"><i class="icon fa fa-user"></i>My Account</a></li>
-					<li><a href="#"><i class="icon fa fa-heart"></i>Wishlist</a></li>
+					
 					<li><a href="#"><i class="icon fa fa-shopping-cart"></i>My Cart</a></li>
 					<li><a href="#"><i class="icon fa fa-check"></i>Checkout</a></li>
-					<li><a href="login.jsp"><i class="icon fa fa-lock"></i>Login</a></li>
+					<li><a href="login.jsp"><i class="icon fa fa-lock"></i><%=account.getName()%></a></li>
 				</ul>
 			</div><!-- /.cnt-account -->
 
@@ -120,11 +136,11 @@
             <div class="basket">
 					<i class="glyphicon glyphicon-shopping-cart"></i>
 				</div>
-				<div class="basket-item-count"><span class="count">2</span></div>
+				<div class="basket-item-count"><span class="count"><%= carth.size() %></span></div>
 				<div class="total-price-basket">
 					<span class="lbl">cart -</span>
 					<span class="total-price">
-						<span class="sign">$</span><span class="value">600.00</span>
+						<span class="sign">$</span><span class="value"><%= cart_price %></span>
 					</span>
 				</div>
 				

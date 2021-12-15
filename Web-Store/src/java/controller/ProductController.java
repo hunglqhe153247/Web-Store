@@ -5,6 +5,7 @@
  */
 package controller;
 
+import dal.CartDAO;
 import dal.ProductDAO;
 import dal.SaleDAO;
 import java.io.IOException;
@@ -15,6 +16,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import model.Account;
+import model.Cart;
 import model.Category;
 import model.Product;
 import model.Sale;
@@ -76,6 +80,11 @@ public class ProductController extends HttpServlet {
         ArrayList<Sale> hotdeals = Sdao.getHighestSales();
         sc.setAttribute("hotdeals", hotdeals);
         sc.setAttribute("newProducts", newProducts);
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute("account");
+        CartDAO cdao = new CartDAO();
+        ArrayList<Cart> cart = cdao.getCart(account.getEmail());
+        session.setAttribute("cart", cart);
         request.getRequestDispatcher("home.jsp").include(request, response);
     }
 
@@ -90,7 +99,7 @@ public class ProductController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        doGet(request, response);
     }
 
     /**

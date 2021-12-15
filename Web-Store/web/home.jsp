@@ -60,7 +60,7 @@
                                 <div class="item">
                                     <div class="products">
                                         <div class="hot-deal-wrapper">
-                                            <div class="image"> <img src="<%=p.getImagie()%>" height="190" width="200" alt=""> </div>
+                                            <div class="image"> <a href="DetailController?id=<%=p.getId()%>"><img src="<%=p.getImagie()%>" height="190" width="200" alt=""></a> </div>
                                             <div class="sale-offer-tag"><span><%=s.getPercentage()%>%<br>
                                                     off</span></div>
 

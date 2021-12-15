@@ -46,7 +46,7 @@
 
 	</head>
     <body class="cnt-home">
-        <%@include file="header.jsp" %>
+        
 
 <div class="breadcrumb">
 	<div class="container">

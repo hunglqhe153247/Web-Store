@@ -183,7 +183,7 @@
                     <div class="products">
                       <div class="product">
                         <div class="product-image">
-                          <div class="image"> <a href="detail.html"><img src="<%=p.getImagie()%>" height="190" width="200" alt=""></a> </div>
+                          <div class="image"> <a href="DetailController?id=<%=p.getId()%>"><img src="<%=p.getImagie()%>" height="190" width="200" alt=""></a> </div>
                           <!-- /.image -->
                           
                           <div class="tag new"><span>new</span></div>
@@ -191,7 +191,7 @@
                         <!-- /.product-image -->
                         
                         <div class="product-info text-left">
-                          <h3 class="name"><a href="detail.html"><%=p.getName() %></a></h3>
+                          <h3 class="name"><a href="DetailController?id=<%=p.getId()%>"><%=p.getName() %></a></h3>
                           <div class="description">Unit: <a style="color:red"><%= p.getUnit()%></a></div>
                           
                           <div class="product-price"> <span class="price"><%= currencyFormatter.format(p.getPrice() / 100 * (100-sale_percentage))%> </span>
@@ -245,14 +245,14 @@
                       <div class="row product-list-row">
                         <div class="col col-sm-4 col-lg-4">
                           <div class="product-image">
-                            <div class="image"> <img src="<%=p.getImagie()%>" height="190" width="200" alt=""> </div>
+                              <div class="image"> <a href="DetailController?id=<%=p.getId()%>"><img src="<%=p.getImagie()%>" height="190" width="200" alt=""></a> </div>
                           </div>
                           <!-- /.product-image --> 
                         </div>
                         <!-- /.col -->
                         <div class="col col-sm-8 col-lg-8">
                           <div class="product-info">
-                            <h3 class="name"><a href="detail.html"><%=p.getName() %></a></h3>
+                            <h3 class="name"><a href="DetailController?id=<%=p.getId()%>"><%=p.getName() %></a></h3>
                             <div class="description">Unit: <a style="color:red"><%= p.getUnit()%></a></div>
                             <div class="product-price"> <span class="price"><%= currencyFormatter.format(p.getPrice() / 100 * (100-sale_percentage))%> </span>
                               <% if (hasSale == true) {%>
@@ -268,8 +268,7 @@
                                     <button class="btn btn-primary icon" data-toggle="dropdown" type="button"> <i class="fa fa-shopping-cart"></i> </button>
                                     <button class="btn btn-primary cart-btn" type="button">Add to cart</button>
                                   </li>
-                                  <li class="lnk wishlist"> <a class="add-to-cart" href="detail.html" title="Wishlist"> <i class="icon fa fa-heart"></i> </a> </li>
-                                  <li class="lnk"> <a class="add-to-cart" href="detail.html" title="Compare"> <i class="fa fa-signal"></i> </a> </li>
+                                  
                                 </ul>
                               </div>
                               <!-- /.action --> 

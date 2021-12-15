@@ -5,10 +5,52 @@
  */
 package dal;
 
+import static dal.DBContext.connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import model.Cart;
+
 /**
  *
  * @author Hung
  */
 public class CartDAO extends DBContext{
-    
+    public static void insertProduct (Cart c) {
+        try {
+            String sql = "INSERT INTO [Cart] VALUES (?, ?, ?);";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, c.getProduct());
+            statement.setInt(2, c.getQuantity());
+            statement.setString(3, c.getCustomer());
+            statement.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public ArrayList<Cart> getCart(String email)
+    {
+        ArrayList<Cart> acc = new ArrayList<>();
+        try {
+            String sql = "SELECT * FROM Cart where customer = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, email);
+            ResultSet rs = stm.executeQuery();
+            while(rs.next())
+            {
+                Cart d = new Cart();
+                d.setProduct(rs.getString("product"));
+                d.setQuantity(rs.getInt("quantity"));
+                d.setCustomer(rs.getString("customer"));
+                
+                acc.add(d);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CartDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return acc;
+    }
 }

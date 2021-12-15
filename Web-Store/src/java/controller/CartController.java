@@ -5,12 +5,16 @@
  */
 package controller;
 
+import dal.CartDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import model.Account;
+import model.Cart;
 
 /**
  *
@@ -56,7 +60,14 @@ public class CartController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String id = request.getParameter("id");
+        String quantity = request.getParameter("quantity");
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute("account");
+        String customer = account.getEmail();
+        CartDAO dao = new CartDAO();
+        Cart cart = new Cart(id, Integer.parseInt(quantity), customer);
+        dao.insertProduct(cart);
     }
 
     /**

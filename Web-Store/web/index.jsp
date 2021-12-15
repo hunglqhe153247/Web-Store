@@ -12,6 +12,6 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <jsp:forward page="ProductController" />
+        <jsp:forward page="login.jsp" />
     </body>
 </html>

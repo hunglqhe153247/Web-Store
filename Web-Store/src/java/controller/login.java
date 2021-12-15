@@ -83,8 +83,8 @@ public class login extends HttpServlet {
         for (Account a : acc) {
             if (a.getEmail().equals(email) && a.getPassword().equals(password)) {
                 HttpSession session = request.getSession();
-                session.setAttribute("Account", a);
-                request.getRequestDispatcher("index.html").forward(request, response);
+                session.setAttribute("account", a);
+                request.getRequestDispatcher("/ProductController").forward(request, response);
                 accept = true;
             }
         }

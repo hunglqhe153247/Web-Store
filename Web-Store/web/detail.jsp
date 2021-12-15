@@ -84,7 +84,7 @@
                                     <div class="item">
                                         <div class="products">
                                             <div class="hot-deal-wrapper">
-                                                <div class="image"> <img src="<%=p.getImagie()%>" height="190" width="200" alt=""> </div>
+                                                <div class="image"> <a href="DetailController?id=<%=p.getId()%>"><img src="<%=p.getImagie()%>" height="190" width="200" alt=""> </a></div>
                                                 <div class="sale-offer-tag"><span><%=s.getPercentage()%>%<br>
                                                         off</span></div>
 
@@ -245,7 +245,7 @@
                         </div>
                         <!-- ============================================== UPSELL PRODUCTS ============================================== -->
                         <section class="section featured-product wow fadeInUp">
-                            <h3 class="section-title">upsell products</h3>
+                            <h3 class="section-title">Products of the same category</h3>
                             <div class="owl-carousel home-owl-carousel upsell-product custom-carousel owl-theme outer-top-xs">
                                 <% ArrayList<Product> productsWithCategory = (ArrayList<Product>) request.getAttribute("productsWithCategory");
                                     for (Product pr : productsWithCategory) {
@@ -256,7 +256,7 @@
                                                 sale_percentage1 = s.getPercentage();
                                                 hasSale1 = true;
                                             }
-                                        
+                                        }
 
                                 %>
                                 <div class="item item-carousel">
@@ -265,50 +265,34 @@
                                         <div class="product">		
                                             <div class="product-image">
                                                 <div class="image">
-                                                    <a href="detail.html"><img src="<%=pr.getImagie()%>" alt=""></a>
+                                                    <a href="DetailController?id=<%=pr.getId()%>"><img src="<%=pr.getImagie()%>" height="190" width="200" alt=""></a>
                                                 </div><!-- /.image -->			
-
-                                                <div class="tag sale"><span>sale</span></div>            		   
+                                                <% if(hasSale1==true){ %>
+                                                <div class="tag sale"><span>sale</span></div> 
+<% } %>                                                
                                             </div><!-- /.product-image -->
 
 
                                             <div class="product-info text-left">
-                                                <h3 class="name"><a href="detail.html"><%=pr.getName()%></a></h3>
+                                                <h3 class="name"><a href="DetailController?id=<%=pr.getId()%>"><%=pr.getName()%></a></h3>
                                                 <div>Unit: <a style="color:red"><%= pr.getUnit()%></a></div>
 
-                                                <div class="product-price"> <span class="price"> <%= currencyFormatter.format(pr.getPrice() / 100 * (100 - s.getPercentage()))%> </span> <span class="price-before-discount"><%= currencyFormatter.format(pr.getPrice())%></span> </div>
+                                                <div class="product-price"> <span class="price"> <%= currencyFormatter.format(pr.getPrice() / 100 * (100 - sale_percentage1))%> </span>
+                                                    <% if (hasSale == true) {%>
+                                                    <span class="price-before-discount"><%= currencyFormatter.format(pr.getPrice())%></span>
+                                                    <% } %>
+                                                </div>
+                                                <div class="card" >
 
+                                                    <p><button style="border: none; outline: 0; padding: 12px; color: white; background-color: #108bea; text-align: center; cursor: pointer; width: 100%; font-size: 18px;">Add to Cart</button></p>
+                                                </div>
                                             </div><!-- /.product-info -->
-                                            <div class="cart clearfix animate-effect">
-                                                <div class="action">
-                                                    <ul class="list-unstyled">
-                                                        <li class="add-cart-button btn-group">
-                                                            <button class="btn btn-primary icon" data-toggle="dropdown" type="button">
-                                                                <i class="fa fa-shopping-cart"></i>													
-                                                            </button>
-                                                            <button class="btn btn-primary cart-btn" type="button">Add to cart</button>
 
-                                                        </li>
-
-                                                        <li class="lnk wishlist">
-                                                            <a class="add-to-cart" href="detail.html" title="Wishlist">
-                                                                <i class="icon fa fa-heart"></i>
-                                                            </a>
-                                                        </li>
-
-                                                        <li class="lnk">
-                                                            <a class="add-to-cart" href="detail.html" title="Compare">
-                                                                <i class="fa fa-signal"></i>
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div><!-- /.action -->
-                                            </div><!-- /.cart -->
                                         </div><!-- /.product -->
 
                                     </div><!-- /.products -->
                                 </div><!-- /.item -->
-                                <%}}%>
+                                <%}%>
 
 
                             </div><!-- /.home-owl-carousel -->
