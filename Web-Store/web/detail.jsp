@@ -104,7 +104,7 @@
                                                 <div class="action">
                                                     <div class="add-cart-button btn-group">
                                                         <button class="btn btn-primary icon" data-toggle="dropdown" type="button"> <i class="fa fa-shopping-cart"></i> </button>
-                                                        <button class="btn btn-primary cart-btn" type="button">Add to cart</button>
+                                                        <button class="btn btn-primary cart-btn" type="button" onclick="location.href='CartController?id=<%=p.getId()%>&quantity=1';">Add to cart</button>
                                                     </div>
                                                 </div>
                                                 <!-- /.action --> 
@@ -209,7 +209,7 @@
 
                                             </div><!-- /.row -->
                                         </div><!-- /.price-container -->
-
+                                        <form action="CartController" method="GET">
                                         <div class="quantity-container info-container">
                                             <div class="row">
 
@@ -220,15 +220,20 @@
                                                 <div class="col-sm-2">
                                                     <div class="cart-quantity">
                                                         <div class="quant-input">
-
-                                                            <input type="number" value="1" min = '1'>
+                                                            
+                                                            
+                                                            <input type="number" value="1" min = '1' name="quantity">
+                                                            <input type="hidden" name="id" value="<%=pro.getId()%>" />
                                                         </div>
                                                     </div>
                                                 </div>
 
                                                 <div class="col-sm-7">
-                                                    <a href="#" class="btn btn-primary"><i class="fa fa-shopping-cart inner-right-vs"></i> ADD TO CART</a>
+                                                    
+                                                    <button class="btn btn-primary cart-btn" type="submit" >Add to cart</button>
                                                 </div>
+                                        </form>
+
 
 
                                             </div><!-- /.row -->
@@ -284,7 +289,7 @@
                                                 </div>
                                                 <div class="card" >
 
-                                                    <p><button style="border: none; outline: 0; padding: 12px; color: white; background-color: #108bea; text-align: center; cursor: pointer; width: 100%; font-size: 18px;">Add to Cart</button></p>
+                                                    <p><button style="border: none; outline: 0; padding: 12px; color: white; background-color: #108bea; text-align: center; cursor: pointer; width: 100%; font-size: 18px;" onclick="location.href='CartController?id=<%=pr.getId()%>&quantity=1';">Add to Cart</button></p>
                                                 </div>
                                             </div><!-- /.product-info -->
 

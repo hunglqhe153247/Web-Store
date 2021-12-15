@@ -76,11 +76,11 @@
                                         </div>
                                         <!-- /.product-info -->
 
-                                        <div class="cart clearfix animate-effect">
+                                        <div class="cart clearfix animate-effect" onclick="location.href='CartController?id=<%=p.getId()%>&quantity=1';">
                                             <div class="action">
                                                 <div class="add-cart-button btn-group">
                                                     <button class="btn btn-primary icon" data-toggle="dropdown" type="button"> <i class="fa fa-shopping-cart"></i> </button>
-                                                    <button class="btn btn-primary cart-btn" type="button">Add to cart</button>
+                                                    <button class="btn btn-primary cart-btn" type="button" >Add to cart</button>
                                                 </div>
                                             </div>
                                             <!-- /.action --> 
@@ -255,7 +255,7 @@
                                                             <!-- /.product-price --> 
                                                             <div class="card" >
 
-                                                                <p><button style="border: none; outline: 0; padding: 12px; color: white; background-color: #108bea; text-align: center; cursor: pointer; width: 100%; font-size: 18px;">Add to Cart</button></p>
+                                                                <p><button style="border: none; outline: 0; padding: 12px; color: white; background-color: #108bea; text-align: center; cursor: pointer; width: 100%; font-size: 18px;" onclick="location.href='CartController?id=<%=p.getId()%>&quantity=1';">Add to Cart</button></p>
                                                             </div>
 
                                                         </div>
@@ -331,7 +331,7 @@
                                                 <!-- /.product-price --> 
                                                 <div class="card" >
 
-                                                    <p><button style="border: none; outline: 0; padding: 12px; color: white; background-color: #108bea; text-align: center; cursor: pointer; width: 100%; font-size: 18px;">Add to Cart</button></p>
+                                                    <p><button style="border: none; outline: 0; padding: 12px; color: white; background-color: #108bea; text-align: center; cursor: pointer; width: 100%; font-size: 18px;" onclick="location.href='CartController?id=<%=p.getId()%>&quantity=1';">Add to Cart</button></p>
                                                 </div>
                                             </div>
                                             <!-- /.product-info -->

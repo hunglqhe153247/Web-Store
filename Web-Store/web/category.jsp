@@ -69,6 +69,7 @@
             String category = productsWithCategory.get(0).getCategory();
             NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(new Locale("en", "US"));
             ArrayList<Review> review = (ArrayList<Review>)request.getAttribute("review");
+            
             %>
             
 
@@ -202,7 +203,7 @@
                           <!-- /.product-price --> 
                           <div class="card" >
 															
-                             <p><button style="border: none; outline: 0; padding: 12px; color: white; background-color: #108bea; text-align: center; cursor: pointer; width: 100%; font-size: 18px;">Add to Cart</button></p>
+                             <p><button style="border: none; outline: 0; padding: 12px; color: white; background-color: #108bea; text-align: center; cursor: pointer; width: 100%; font-size: 18px;" onclick="location.href='CartController?id=<%=p.getId()%>&quantity=1';">Add to Cart</button></p>
                            </div>
                         </div>
                         <!-- /.product-info -->
@@ -266,7 +267,7 @@
                                 <ul class="list-unstyled">
                                   <li class="add-cart-button btn-group">
                                     <button class="btn btn-primary icon" data-toggle="dropdown" type="button"> <i class="fa fa-shopping-cart"></i> </button>
-                                    <button class="btn btn-primary cart-btn" type="button">Add to cart</button>
+                                    <button class="btn btn-primary cart-btn" type="button" onclick="location.href='CartController?id=<%=p.getId()%>&quantity=1';">Add to cart</button>
                                   </li>
                                   
                                 </ul>
