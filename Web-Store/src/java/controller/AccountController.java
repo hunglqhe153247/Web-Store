@@ -59,7 +59,16 @@ public class AccountController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String name = request.getParameter("name");
+        String email = request.getParameter("email");
+        String phone = request.getParameter("phone");
+        String address = request.getParameter("address");
+        String password = request.getParameter("password");
+        AccountDAO dao = new AccountDAO();
+        Account c = new Account(email, name, phone, password, address);
+        dao.updateAccount(c);
+        request.getSession().setAttribute("account", c);
+        request.getRequestDispatcher("editaccount.jsp").include(request, response);
     }
 
     /**

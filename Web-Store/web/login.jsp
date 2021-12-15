@@ -4,6 +4,8 @@
     Author     : Hung
 --%>
 
+<%@page import="model.Account"%>
+<%@page import="dal.AccountDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <!DOCTYPE html>
@@ -46,7 +48,21 @@
 
 	</head>
     <body class="cnt-home">
-        
+        <% Cookie[] cookies = request.getCookies();
+        AccountDAO db = new AccountDAO();
+        if (cookies != null) {
+            for (Cookie cooky : cookies) {
+                if (cooky.getName().equals("email")) {
+                    Account account = db.getAccount(cooky.getValue());
+                    if (account != null) {
+                        
+                        session.setAttribute("account", account);
+                        request.getRequestDispatcher("home.jsp").forward(request, response);
+                    }
+                }
+            }
+
+        } %>
 
 <div class="breadcrumb">
 	<div class="container">

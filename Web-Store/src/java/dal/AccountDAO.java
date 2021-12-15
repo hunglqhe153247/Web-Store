@@ -5,6 +5,7 @@
  */
 package dal;
 
+import static dal.DBContext.connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,21 +13,21 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Account;
+import model.Cart;
 
 /**
  *
  * @author Surface book 2
  */
 public class AccountDAO extends DBContext {
-    public ArrayList<Account> getAllAccounts()
-    {
+
+    public ArrayList<Account> getAllAccounts() {
         ArrayList<Account> acc = new ArrayList<>();
         try {
             String sql = "SELECT * FROM Account";
             PreparedStatement stm = connection.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
-            while(rs.next())
-            {
+            while (rs.next()) {
                 Account d = new Account();
                 d.setEmail(rs.getString("email"));
                 d.setName(rs.getString("name"));
@@ -40,17 +41,16 @@ public class AccountDAO extends DBContext {
         }
         return acc;
     }
-    public Account getAccount(String email)
-    {
-        
+
+    public Account getAccount(String email) {
+
         try {
             String sql = "SELECT * FROM Account where email=?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, email);
             ResultSet rs = stm.executeQuery();
-            
-            while(rs.next())
-            {
+
+            while (rs.next()) {
                 Account d = new Account();
                 d.setEmail(rs.getString("email"));
                 d.setName(rs.getString("name"));
@@ -64,6 +64,7 @@ public class AccountDAO extends DBContext {
         }
         return null;
     }
+
     public static void insertAccount(Account s) {
         try {
             String sql = "INSERT INTO Account VALUES (?, ?, ?, ?, ?);";
@@ -76,6 +77,23 @@ public class AccountDAO extends DBContext {
             statement.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public static void updateAccount(Account c) {
+        try {
+            String sql = "UPDATE Account\n"
+                    + "SET name = ?, phone = ?, address= ?, password=? \n"
+                    + "WHERE email= ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, c.getName());
+            statement.setString(2, c.getPhone());
+            statement.setString(3, c.getAddress());
+            statement.setString(4, c.getPassword());
+            statement.setString(5, c.getEmail());
+            statement.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
