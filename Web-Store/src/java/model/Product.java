@@ -15,7 +15,7 @@ public class Product {
 
     String id;
     String name;
-    int price;
+    float price;
     String unit;
     String category;
     String imagie;
@@ -24,7 +24,7 @@ public class Product {
     public Product() {
     }
 
-    public Product(String id, String name, int price, String unit, String category, String imagie, String description) {
+    public Product(String id, String name, float price, String unit, String category, String imagie, String description) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -33,6 +33,8 @@ public class Product {
         this.imagie = imagie;
         this.description = description;
     }
+
+    
 
     public String getDescription() {
         return description;
@@ -66,13 +68,15 @@ public class Product {
         this.name = name;
     }
 
-    public int getPrice() {
+    public float getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(float price) {
         this.price = price;
     }
+
+    
 
     public String getUnit() {
         return unit;
@@ -115,11 +119,11 @@ public class Product {
     public static Comparator<Product> ProductPriceComparatorAsc = new Comparator<Product>() {
 
         public int compare(Product s1, Product s2) {
-            int ProductPrice1 = s1.getPrice();
-            int ProductPrice2 = s2.getPrice();
+            float ProductPrice1 = s1.getPrice();
+            float ProductPrice2 = s2.getPrice();
 
             //ascending order
-            return ProductPrice1 - ProductPrice2;
+            return (int) (ProductPrice1 - ProductPrice2);
 
             
         }
@@ -127,11 +131,11 @@ public class Product {
     public static Comparator<Product> ProductPriceComparatorDes = new Comparator<Product>() {
 
         public int compare(Product s1, Product s2) {
-            int ProductPrice1 = s1.getPrice();
-            int ProductPrice2 = s2.getPrice();
+            float ProductPrice1 = s1.getPrice();
+            float ProductPrice2 = s2.getPrice();
 
             
-            return ProductPrice2 - ProductPrice1;
+            return (int) (ProductPrice2 - ProductPrice1);
 
             //descending order
             

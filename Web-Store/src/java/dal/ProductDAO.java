@@ -34,7 +34,7 @@ public class ProductDAO extends DBContext{
                 Product d = new Product();
                 d.setId(rs.getString("id"));
                 d.setName(rs.getString("name"));
-                d.setPrice(rs.getInt("price"));
+                d.setPrice(rs.getFloat("price"));
                 d.setUnit(rs.getString("unit"));
                 d.setCategory(rs.getString("category"));
                 d.setImagie(rs.getString("imagie"));
@@ -60,11 +60,33 @@ public class ProductDAO extends DBContext{
                 
                 d.setId(rs.getString("id"));
                 d.setName(rs.getString("name"));
-                d.setPrice(rs.getInt("price"));
+                d.setPrice(rs.getFloat("price"));
                 d.setUnit(rs.getString("unit"));
                 d.setCategory(rs.getString("category"));
                 d.setImagie(rs.getString("imagie"));
                 d.setDescription(rs.getString("description"));
+                
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return d;
+    }
+    public Category getCategory(String id)
+    {
+        Category d = new Category();
+        try {
+            String sql = "SELECT * FROM [Categories] where id = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, id);
+            ResultSet rs = stm.executeQuery();
+            
+            while(rs.next())
+            {
+                
+                d.setId(rs.getString("id"));
+                d.setName(rs.getString("name"));
+                
                 
             }
         } catch (SQLException ex) {
@@ -106,7 +128,7 @@ public class ProductDAO extends DBContext{
                 Product d = new Product();
                 d.setId(rs.getString("id"));
                 d.setName(rs.getString("name"));
-                d.setPrice(rs.getInt("price"));
+                d.setPrice(rs.getFloat("price"));
                 d.setUnit(rs.getString("unit"));
                 d.setCategory(rs.getString("category"));
                 d.setImagie(rs.getString("imagie"));
@@ -130,7 +152,7 @@ public class ProductDAO extends DBContext{
                 Product d = new Product();
                 d.setId(rs.getString("id"));
                 d.setName(rs.getString("name"));
-                d.setPrice(rs.getInt("price"));
+                d.setPrice(rs.getFloat("price"));
                 d.setUnit(rs.getString("unit"));
                 d.setCategory(rs.getString("category"));
                 d.setImagie(rs.getString("imagie"));
@@ -155,7 +177,7 @@ public class ProductDAO extends DBContext{
                 Product d = new Product();
                 d.setId(rs.getString("id"));
                 d.setName(rs.getString("name"));
-                d.setPrice(rs.getInt("price"));
+                d.setPrice(rs.getFloat("price"));
                 d.setUnit(rs.getString("unit"));
                 d.setCategory(rs.getString("category"));
                 d.setImagie(rs.getString("imagie"));

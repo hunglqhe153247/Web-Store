@@ -51,7 +51,7 @@
                             <div class="owl-carousel sidebar-carousel custom-carousel owl-theme outer-top-ss">
                                 <% ArrayList<Sale> hotdeals = (ArrayList<Sale>) getServletContext().getAttribute("hotdeals");
                                     ArrayList<Product> products = (ArrayList<Product>) getServletContext().getAttribute("products");
-                                    NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
+                                    NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(new Locale("en", "US"));
                                     for (Sale s : hotdeals) {
 
                                         for (Product p : products) {

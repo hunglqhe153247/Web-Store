@@ -67,7 +67,7 @@
             <!-- ============================================== PRICE SILDER============================================== -->
             <% ArrayList<Product> productsWithCategory = (ArrayList<Product>)request.getAttribute("productsWithCategory");
             String category = productsWithCategory.get(0).getCategory();
-            NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
+            NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(new Locale("en", "US"));
             ArrayList<Review> review = (ArrayList<Review>)request.getAttribute("review");
             %>
             

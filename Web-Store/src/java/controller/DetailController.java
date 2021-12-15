@@ -8,10 +8,13 @@ package controller;
 import dal.ProductDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Collections;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Category;
 import model.Product;
 
 /**
@@ -62,7 +65,11 @@ public class DetailController extends HttpServlet {
         ProductDAO dao = new ProductDAO();
         Product productdetail = dao.getProducts(id);
         request.setAttribute("productdetail", productdetail);
-        request.setAttribute("category", productdetail.getCategory());
+        Category category = dao.getCategory(productdetail.getCategory());
+        request.setAttribute("category", category);
+        ArrayList<Product> productsWithCategory = dao.getProductsWithCategory(category.getId());
+        Collections.sort(productsWithCategory, Product.ProductNameComparatorAsc);
+        request.setAttribute("productsWithCategory", productsWithCategory);
         request.getRequestDispatcher("detail.jsp").include(request, response);
         
     }
