@@ -6,9 +6,12 @@
 package controller;
 
 import dal.AccountDAO;
+import dal.ProductDAO;
+import dal.SaleDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
@@ -16,6 +19,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.Account;
+import model.Category;
+import model.Product;
+import model.Sale;
 
 /**
  *
@@ -97,6 +103,27 @@ public class login extends HttpServlet {
         String password = request.getParameter("password");
         boolean accept = false;
         PrintWriter out = response.getWriter();
+        if (email.equals("Admin@admin") && password.equals("Admin")) {
+            HttpSession session = request.getSession();
+            Account a = new Account(email, "Admin@admin", "Admin", "Admin", "Admin");
+            session.setAttribute("account", a);
+            ProductDAO Pdao = new ProductDAO();
+        SaleDAO Sdao = new SaleDAO();
+        ArrayList<Category> categories = Pdao.getAllCategories();
+        ArrayList<Product> products = Pdao.getAllProducts();
+        ServletContext sc = getServletContext();
+        sc.setAttribute("categories", categories);
+        sc.setAttribute("products", products);
+        ArrayList<Product> newProducts = Pdao.getNewProducts();
+        ArrayList<Sale> sales = Sdao.getAllSales();
+        sc.setAttribute("sales", sales);
+        ArrayList<Sale> hotdeals = Sdao.getHighestSales();
+        sc.setAttribute("hotdeals", hotdeals);
+        sc.setAttribute("newProducts", newProducts);
+        
+        
+            request.getRequestDispatcher("admin.jsp").forward(request, response);
+        }
         for (Account a : acc) {
             if (a.getEmail().equals(email) && a.getPassword().equals(password)) {
                 String remember = request.getParameter("remember");
@@ -117,10 +144,7 @@ public class login extends HttpServlet {
         }
         if (accept == false) {
 
-            out.println("<script type=\"text/javascript\">");
-            out.println("alert('Email or password incorrect');");
-            out.println("location='login.jsp';");
-            out.println("</script>");
+            request.setAttribute("login", "Login failled");
             request.getRequestDispatcher("login.jsp").forward(request, response);
         }
     }

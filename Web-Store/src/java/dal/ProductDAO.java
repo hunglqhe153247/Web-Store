@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.Account;
 import model.Category;
 
 import model.Product;
@@ -39,6 +40,7 @@ public class ProductDAO extends DBContext{
                 d.setCategory(rs.getString("category"));
                 d.setImagie(rs.getString("imagie"));
                 d.setDescription(rs.getString("description"));
+                d.setSupplier(rs.getString("supplier"));
                 products.add(d);
             }
         } catch (SQLException ex) {
@@ -64,6 +66,7 @@ public class ProductDAO extends DBContext{
                 d.setCategory(rs.getString("category"));
                 d.setImagie(rs.getString("imagie"));
                 d.setDescription(rs.getString("description"));
+                d.setSupplier(rs.getString("supplier"));
                 products.add(d);
             }
         } catch (SQLException ex) {
@@ -90,6 +93,7 @@ public class ProductDAO extends DBContext{
                 d.setCategory(rs.getString("category"));
                 d.setImagie(rs.getString("imagie"));
                 d.setDescription(rs.getString("description"));
+                d.setSupplier(rs.getString("supplier"));
                 
             }
         } catch (SQLException ex) {
@@ -158,6 +162,7 @@ public class ProductDAO extends DBContext{
                 d.setCategory(rs.getString("category"));
                 d.setImagie(rs.getString("imagie"));
                 d.setDescription(rs.getString("description"));
+                d.setSupplier(rs.getString("supplier"));
                 products.add(d);
             }
         } catch (SQLException ex) {
@@ -182,6 +187,7 @@ public class ProductDAO extends DBContext{
                 d.setCategory(rs.getString("category"));
                 d.setImagie(rs.getString("imagie"));
                 d.setDescription(rs.getString("description"));
+                d.setSupplier(rs.getString("supplier"));
                 products.add(d);
             }
         } catch (SQLException ex) {
@@ -207,6 +213,7 @@ public class ProductDAO extends DBContext{
                 d.setCategory(rs.getString("category"));
                 d.setImagie(rs.getString("imagie"));
                 d.setDescription(rs.getString("description"));
+                d.setSupplier(rs.getString("supplier"));
                 products.add(d);
             }
         } catch (SQLException ex) {
@@ -231,11 +238,41 @@ public class ProductDAO extends DBContext{
                 d.setCategory(rs.getString("category"));
                 d.setImagie(rs.getString("imagie"));
                 d.setContent(rs.getString("content"));
+                
                 products.add(d);
             }
         } catch (SQLException ex) {
             Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return products;
+    }
+    public static void insertProduct(Product s) {
+        try {
+            String sql = "INSERT INTO Product VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, s.getId());
+            statement.setString(2, s.getName());
+            statement.setFloat(3, s.getPrice());
+            statement.setString(4, s.getUnit());
+            statement.setString(5, s.getCategory());
+            statement.setString(6, s.getImagie());
+            statement.setString(7, s.getDescription());
+            statement.setString(8, s.getSupplier());
+            statement.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public static void deleteProduct (String id) {
+        try {
+            String sql = "DELETE FROM Product WHERE id=?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            
+            statement.setString(1, id);
+            
+            statement.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

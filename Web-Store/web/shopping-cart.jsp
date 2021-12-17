@@ -97,7 +97,7 @@
                                                         
                                         %>
                                         <tr>
-                                            <td class="romove-item"><a href="DeleteProductFromCart?id=<%=product.getId()%>" title="cancel" class="icon"><i class="fa fa-trash-o"></i></a></td>
+                                            <td class="romove-item"><a href="DeleteProductFromCart?id=<%=product.getId()%>" title="cancel" class="icon" onclick="return confirm('Do you want to delete this product ?');"><i class="fa fa-trash-o"></i></a></td>
                                             <td class="cart-image">
                                                 <a class="entry-thumbnail" href="DetailController?id=<%=product.getId()%>">
                                                     <img src="<%= product.getImagie()%>" height="190" width="200" alt="">

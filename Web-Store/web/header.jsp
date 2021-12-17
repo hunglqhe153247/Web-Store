@@ -71,10 +71,10 @@
                     <div class="header-top-inner">
                         <div class="cnt-account">
                             <ul class="list-unstyled">
-
+                                <li><a href="logout"><i class="icon fa fa-lock"></i>Logout</a></li>
                                 <li><a href="shopping-cart.jsp"><i class="icon fa fa-shopping-cart"></i>My Cart</a></li>
                                 <li><a href="CheckoutController"><i class="icon fa fa-check"></i>Checkout</a></li>
-                                <li><a href="editaccount"><i class="icon fa fa-lock"></i><%=eg.getName()%></a></li>
+                                <li><a href="editaccount.jsp"><i class="icon fa fa-user"></i><%=eg.getName()%></a></li>
                             </ul>
                         </div><!-- /.cnt-account -->
 
@@ -147,11 +147,11 @@
                                                 </div>
                                                 <div class="col-xs-7">
 
-                                                    <h3 class="name"><a href="DetailController?id=<%=productx.getId()%>"><%=productx.getName()%></a></h3>
+                                                    <h3 class="name"><a href="DetailController?id=<%=productx.getId()%>"><%=productx.getName()%></a> x <%=ch2.getQuantity()%></h3>
                                                     <div class="price"><%= currencyFormatterh.format(productx.getPrice() * ch2.getQuantity())%></div>
                                                 </div>
                                                 <div class="col-xs-1 action">
-                                                    <a href="DeleteProductFromCart?id=<%=productx.getId()%>"><i class="fa fa-trash"></i></a>
+                                                    <a href="DeleteProductFromCart?id=<%=productx.getId()%>" onclick="return confirm('Do you want to delete this product ?');"><i class="fa fa-trash"></i></a>
                                                 </div>
                                             </div>
                                         </div><!-- /.cart-item -->

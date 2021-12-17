@@ -1,4 +1,10 @@
-﻿<!DOCTYPE html>
+<%@page import="model.Category"%>
+<%@page import="java.text.NumberFormat"%>
+<%@page import="java.util.Locale"%>
+<%@page import="model.Product"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="model.Account"%>
+?<!DOCTYPE html>
 <html lang="en">
     <head>
         <!-- Meta -->
@@ -39,17 +45,19 @@
     </head>
     <body class="cnt-home">
         <!-- ============================================== HEADER ============================================== -->
-        <%@include file="header.jsp" %>           
+           
         <!-- ============================================== HEADER : END ============================================== -->
         <% Account account = (Account) session.getAttribute("account");
-
+ArrayList<Category> categories = (ArrayList<Category>) getServletContext().getAttribute("categories");
+Product proupdate = (Product) request.getAttribute("proupdate");
         %>
         <div class="breadcrumb">
             <div class="container">
                 <div class="breadcrumb-inner">
                     <ul class="list-inline list-unstyled">
-                        <li><a href="home.jsp">Home</a></li>
-                        <li class='active'>Account information</li>
+                        
+                        <li class='active'>Admin</li>
+                        <li><a href="logout"><i class="icon fa fa-lock"></i>Logout</a></li>
                     </ul>
                 </div><!-- /.breadcrumb-inner -->
             </div><!-- /.container -->
@@ -58,41 +66,52 @@
         <div class="body-content">
             <div class="container">
                 <div class="contact-page">
-                    <div class="col-md-6 col-sm-6 create-new-account">
-                        <h4 class="checkout-subtitle">Account Information</h4>
-                        <p class="text title-tag-line">View and change informations</p>
-                        <form class="register-form outer-top-xs" role="form" action="AccountController" method="GET"> 
+                    <div class="col-md-12 col-sm-12 create-new-account">
+                        <h4 class="checkout-subtitle">Add product</h4>
+                        
+                        <form class="register-form outer-top-xs" role="form" action="UpdateProductFromDatebase" method="POST"> 
                             <div class="form-group">
-                                <label class="info-title" for="exampleInputEmail2">Email Address <span>*</span></label>
-                                <input type="email" class="form-control unicase-form-control text-input" id="exampleInputEmail2" name="email" readonly="readonly"  value="<%=account.getEmail()%>">
+                                <label class="info-title" for="exampleInputEmail2">id <span>*</span></label>
+                                <input type="text" class="form-control unicase-form-control text-input" id="exampleInputEmail2" name="id" value="<%=proupdate.getId()%>">
                             </div>
                             <div class="form-group">
                                 <label class="info-title" for="exampleInputEmail1">Name <span>*</span></label>
-                                <input type="name" class="form-control unicase-form-control text-input" id="exampleInputEmail1" name="name" value = "<%=account.getName() %>">
+                                <input type="text" class="form-control unicase-form-control text-input" id="exampleInputEmail1" name="name" value = "<%=proupdate.getName()%>">
                             </div>
                             <div class="form-group">
-                                <label class="info-title" for="exampleInputEmail1">Phone Number <span>*</span></label>
-                                <input type="text" class="form-control unicase-form-control text-input" id="exampleInputEmail1" name="phone" value = "<%=account.getPhone() %>">
+                                <label class="info-title" for="exampleInputEmail1">Price <span>*</span></label>
+                                <input type="number" class="form-control unicase-form-control text-input" id="exampleInputEmail1" name="price" value = "<%=proupdate.getPrice()%>">
                             </div>
                             <div class="form-group">
-                                <label class="info-title" for="exampleInputEmail1">Address <span>*</span></label>
-                                <input type="text" class="form-control unicase-form-control text-input" id="exampleInputEmail1" name="address" value = "<%=account.getAddress() %>">
+                                <label class="info-title" for="exampleInputEmail1">Unit <span>*</span></label>
+                                <input type="text" class="form-control unicase-form-control text-input" id="exampleInputEmail1" name="unit" value = "<%=proupdate.getUnit()%>">
                             </div>
                             <div class="form-group">
-                                <label class="info-title" for="exampleInputEmail1">Password <span>*</span></label>
-                                <input type="text" class="form-control unicase-form-control text-input" name="password" id="password">
+                                <label class="info-title" for="exampleInputEmail1">Category <span>*</span></label>
+                                <% for(Category cate:categories){ %>
+                                <input type="radio" name="category" value="<%=cate.getId()%>" /><%=cate.getName()%>
+                                <% } %>
                             </div>
                             <div class="form-group">
-                                <label class="info-title" for="exampleInputEmail1">Confirm Password <span>*</span></label>
-                                <input type="text" class="form-control unicase-form-control text-input" name="confirm_password" id="confirm_password">
+                                <label class="info-title" for="exampleInputEmail1">Imagie <span>*</span></label>
+                                <input type="text" class="form-control unicase-form-control text-input" name="imagie" id="" value="<%=proupdate.getImagie()%>">
                             </div>
-                            <span id='message'></span>
+                            <div class="form-group">
+                                <label class="info-title" for="exampleInputEmail1">Description <span>*</span></label>
+                                <input type="text" class="form-control unicase-form-control text-input" name="description" id="confirm_password" value="<%=proupdate.getDescription()%>">
+                            </div>
+                            <div class="form-group">
+                                <label class="info-title" for="exampleInputEmail1">Supplier <span>*</span></label>
+                                <input type="text" class="form-control unicase-form-control text-input" name="supplier" id="c" value="<%=proupdate.getDescription()%>">
+                            </div>
+                            
                             <br>
-                            <button type="submit" class="btn-upper btn btn-primary checkout-page-button">Save Changes</button>
+                            <button type="submit" class="btn-upper btn btn-primary checkout-page-button">Update Product</button>
                         </form>
 
 
                     </div>
+                    
                 </div><!-- /.row -->
                 <!-- ============================================== BRANDS CAROUSEL ============================================== -->
                 <div id="brands-carousel" class="logo-slider wow fadeInUp">
@@ -164,14 +183,14 @@
                 </div><!-- /.logo-slider -->
                 <!-- ============================================== BRANDS CAROUSEL : END ============================================== -->	</div><!-- /.container -->
             <!-- ============================================================= FOOTER ============================================================= -->
-            <%@include file="footer.jsp" %>
+            
             <!-- ============================================================= FOOTER : END============================================================= -->
 
 
-            <!-- For demo purposes – can be removed on production -->
+            <!-- For demo purposes ? can be removed on production -->
 
 
-            <!-- For demo purposes – can be removed on production : End -->
+            <!-- For demo purposes ? can be removed on production : End -->
 
             <!-- JavaScripts placed at the end of the document so the pages load faster -->
             <script src="assets\js\jquery-1.11.1.min.js"></script>
@@ -190,7 +209,7 @@
             <script src="assets\js\wow.min.js"></script>
             <script src="assets\js\scripts.js"></script>
 
-            <!-- For demo purposes – can be removed on production -->
+            <!-- For demo purposes ? can be removed on production -->
 
             <script src="switchstylesheet/switchstylesheet.js"></script>
 
@@ -215,7 +234,7 @@
                         $('#message').html('Not Matching').css('color', 'red');
                 });
             </script>
-            <!-- For demo purposes – can be removed on production : End -->
+            <!-- For demo purposes ? can be removed on production : End -->
 
 
 

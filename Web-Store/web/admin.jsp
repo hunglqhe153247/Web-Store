@@ -1,4 +1,10 @@
-﻿<!DOCTYPE html>
+<%@page import="model.Category"%>
+<%@page import="java.text.NumberFormat"%>
+<%@page import="java.util.Locale"%>
+<%@page import="model.Product"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="model.Account"%>
+?<!DOCTYPE html>
 <html lang="en">
     <head>
         <!-- Meta -->
@@ -39,17 +45,19 @@
     </head>
     <body class="cnt-home">
         <!-- ============================================== HEADER ============================================== -->
-        <%@include file="header.jsp" %>           
+           
         <!-- ============================================== HEADER : END ============================================== -->
         <% Account account = (Account) session.getAttribute("account");
-
+ArrayList<Category> categories = (ArrayList<Category>) getServletContext().getAttribute("categories");
         %>
         <div class="breadcrumb">
             <div class="container">
                 <div class="breadcrumb-inner">
                     <ul class="list-inline list-unstyled">
-                        <li><a href="home.jsp">Home</a></li>
-                        <li class='active'>Account information</li>
+                        
+                        <li class='active'>Admin</li>
+                        <li><a href="logout"><i class="icon fa fa-lock"></i>Logout</a></li>
+                        <li><a href="add.jsp"><i class="icon fa fa-edit"></i>Add Product</a></li>
                     </ul>
                 </div><!-- /.breadcrumb-inner -->
             </div><!-- /.container -->
@@ -58,41 +66,65 @@
         <div class="body-content">
             <div class="container">
                 <div class="contact-page">
-                    <div class="col-md-6 col-sm-6 create-new-account">
-                        <h4 class="checkout-subtitle">Account Information</h4>
-                        <p class="text title-tag-line">View and change informations</p>
-                        <form class="register-form outer-top-xs" role="form" action="AccountController" method="GET"> 
-                            <div class="form-group">
-                                <label class="info-title" for="exampleInputEmail2">Email Address <span>*</span></label>
-                                <input type="email" class="form-control unicase-form-control text-input" id="exampleInputEmail2" name="email" readonly="readonly"  value="<%=account.getEmail()%>">
-                            </div>
-                            <div class="form-group">
-                                <label class="info-title" for="exampleInputEmail1">Name <span>*</span></label>
-                                <input type="name" class="form-control unicase-form-control text-input" id="exampleInputEmail1" name="name" value = "<%=account.getName() %>">
-                            </div>
-                            <div class="form-group">
-                                <label class="info-title" for="exampleInputEmail1">Phone Number <span>*</span></label>
-                                <input type="text" class="form-control unicase-form-control text-input" id="exampleInputEmail1" name="phone" value = "<%=account.getPhone() %>">
-                            </div>
-                            <div class="form-group">
-                                <label class="info-title" for="exampleInputEmail1">Address <span>*</span></label>
-                                <input type="text" class="form-control unicase-form-control text-input" id="exampleInputEmail1" name="address" value = "<%=account.getAddress() %>">
-                            </div>
-                            <div class="form-group">
-                                <label class="info-title" for="exampleInputEmail1">Password <span>*</span></label>
-                                <input type="text" class="form-control unicase-form-control text-input" name="password" id="password">
-                            </div>
-                            <div class="form-group">
-                                <label class="info-title" for="exampleInputEmail1">Confirm Password <span>*</span></label>
-                                <input type="text" class="form-control unicase-form-control text-input" name="confirm_password" id="confirm_password">
-                            </div>
-                            <span id='message'></span>
-                            <br>
-                            <button type="submit" class="btn-upper btn btn-primary checkout-page-button">Save Changes</button>
-                        </form>
+                    
+                    <div class="table-responsive">
+                        <h4 class="checkout-subtitle">Product List</h4>
+                        
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            
+                                            <th class="cart-description item">Update</th>
+                                            <th class="cart-description item">Delete</th>
+                                            <th class="cart-product-name item">Product Imagie</th>
+                                            
+                                            <th class="cart-qty item">Product Detail</th>
+                                            <th class="cart-sub-total item">Category</th>
+                                            <th class="cart-sub-total item">Price</th>
+                                            <th class="cart-sub-total item">Supplier</th>
+                                        </tr>
+                                    </thead><!-- /thead -->
+                                    
 
-
-                    </div>
+                                    <tbody>
+                                        <% 
+                                            ArrayList<Product> products = (ArrayList<Product>) getServletContext().getAttribute("products");
+                                            NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(new Locale("en", "US"));
+                                            
+                                            
+                                            
+                                                for (Product product : products) {
+                                                    
+                                                        
+                                        %>
+                                        <tr>
+                                            <td class="romove-item"><a href="UpdateProductFromDatebase?id=<%=product.getId()%>" title="cancel" class="icon" onclick="return confirm('Do you want to edit this product ?');"><i class="fa fa-edit"></i></a></td>
+                                            <td class="romove-item"><a href="DeleteProductFromDatebase?id=<%=product.getId()%>" title="cancel" class="icon" onclick="return confirm('Do you want to delete this product ?');"><i class="fa fa-trash-o"></i></a></td>
+                                            <td class="cart-image">
+                                                <a class="entry-thumbnail" href="DetailController?id=<%=product.getId()%>">
+                                                    <img src="<%= product.getImagie()%>" height="190" width="200" alt="">
+                                                </a>
+                                            </td>
+                                            
+                                            <td class="cart-product-name-info">
+                                                <h4 class='cart-product-description'><a href="DetailController?id=<%=product.getId()%>"><%= product.getName()%></a></h4>
+                                                <div class="cart-product-info">
+                                                    <div class="description">Unit: <a style="color:red"><%= product.getUnit()%></a></div>
+                                                </div><!-- /.row -->
+                                                <div class="cart-product-info">
+                                                    <%=product.getDescription()%>
+                                                </div>
+                                            </td>
+                                            <td><%=product.getCategory()%></td>
+                                            
+                                            <td class="cart-product-sub-total"><span class="cart-sub-total-price"><%= currencyFormatter.format(product.getPrice())%></span></td>
+                                            <td><%=product.getSupplier()%></td>
+                                        </tr>
+                                        <% }
+                                    %>
+                                    </tbody><!-- /tbody -->
+                                </table><!-- /table -->
+                            </div>
                 </div><!-- /.row -->
                 <!-- ============================================== BRANDS CAROUSEL ============================================== -->
                 <div id="brands-carousel" class="logo-slider wow fadeInUp">
@@ -164,14 +196,14 @@
                 </div><!-- /.logo-slider -->
                 <!-- ============================================== BRANDS CAROUSEL : END ============================================== -->	</div><!-- /.container -->
             <!-- ============================================================= FOOTER ============================================================= -->
-            <%@include file="footer.jsp" %>
+            
             <!-- ============================================================= FOOTER : END============================================================= -->
 
 
-            <!-- For demo purposes – can be removed on production -->
+            <!-- For demo purposes ? can be removed on production -->
 
 
-            <!-- For demo purposes – can be removed on production : End -->
+            <!-- For demo purposes ? can be removed on production : End -->
 
             <!-- JavaScripts placed at the end of the document so the pages load faster -->
             <script src="assets\js\jquery-1.11.1.min.js"></script>
@@ -190,7 +222,7 @@
             <script src="assets\js\wow.min.js"></script>
             <script src="assets\js\scripts.js"></script>
 
-            <!-- For demo purposes – can be removed on production -->
+            <!-- For demo purposes ? can be removed on production -->
 
             <script src="switchstylesheet/switchstylesheet.js"></script>
 
@@ -215,7 +247,7 @@
                         $('#message').html('Not Matching').css('color', 'red');
                 });
             </script>
-            <!-- For demo purposes – can be removed on production : End -->
+            <!-- For demo purposes ? can be removed on production : End -->
 
 
 

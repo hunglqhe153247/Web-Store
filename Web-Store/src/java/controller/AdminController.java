@@ -5,21 +5,22 @@
  */
 package controller;
 
-import dal.AccountDAO;
+import dal.ProductDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.Account;
+import model.Product;
 
 /**
  *
  * @author Hung
  */
-public class AccountController extends HttpServlet {
+public class AdminController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,10 +39,10 @@ public class AccountController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AccountController</title>");
+            out.println("<title>Servlet AdminController</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet AccountController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet AdminController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -59,16 +60,19 @@ public class AccountController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String id = request.getParameter("id");
         String name = request.getParameter("name");
-        String email = request.getParameter("email");
-        String phone = request.getParameter("phone");
-        String address = request.getParameter("address");
-        String password = request.getParameter("password");
-        AccountDAO dao = new AccountDAO();
-        Account c = new Account(email, name, phone, password, address);
-        dao.updateAccount(c);
-        request.getSession().setAttribute("account", c);
-        request.getRequestDispatcher("editaccount.jsp").include(request, response);
+        float price = Float.parseFloat(request.getParameter("price"));
+        String unit = request.getParameter("unit");
+        String category = request.getParameter("category");
+        String imagie = request.getParameter("imagie");
+        String description = request.getParameter("description");
+        String supplier = request.getParameter("supplier");
+        Product s = new Product(id, name, price, unit, category, imagie, description, supplier);
+        ProductDAO dao = new ProductDAO();
+        dao.insertProduct(s);
+        request.getRequestDispatcher("admin.jsp").include(request, response);
+        
     }
 
     /**
@@ -82,33 +86,21 @@ public class AccountController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        AccountDAO dao = new AccountDAO();
-        ArrayList<Account> acc = dao.getAllAccounts();
-        String email = request.getParameter("email");
+        String id = request.getParameter("id");
         String name = request.getParameter("name");
-        String phone = request.getParameter("phone");
-        String password = request.getParameter("password");
-        String confirm_password = request.getParameter("confirm_password");
-        PrintWriter out = response.getWriter();
-        boolean accept = true;
-        for (Account a : acc) {
-            if (a.getEmail().equals(email)) {
-                accept = false;
-                request.setAttribute("create", "Email already in used");
-                request.getRequestDispatcher("login.jsp").include(request, response);
-            }
-            if (!password.equals(confirm_password)) {
-                accept = false;
-                request.setAttribute("create", "Password not match");
-                request.getRequestDispatcher("login.jsp").include(request, response);
-            }
-        }
-        if (accept == true) {
-            Account a = new Account(email, name, phone, password, phone);
-            dao.insertAccount(a);
-            request.setAttribute("create", "Create successfully");
-            request.getRequestDispatcher("login.jsp").include(request, response);
-        }
+        float price = Float.parseFloat(request.getParameter("price"));
+        String unit = request.getParameter("unit");
+        String category = request.getParameter("category");
+        String imagie = request.getParameter("imagie");
+        String description = request.getParameter("description");
+        String supplier = request.getParameter("supplier");
+        Product s = new Product(id, name, price, unit, category, imagie, description, supplier);
+        ProductDAO dao = new ProductDAO();
+        dao.insertProduct(s);
+        ArrayList<Product> products = dao.getAllProducts();
+        ServletContext sc = getServletContext();
+        sc.setAttribute("products", products);
+        request.getRequestDispatcher("admin.jsp").forward(request, response);
     }
 
     /**

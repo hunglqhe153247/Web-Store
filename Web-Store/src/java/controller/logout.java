@@ -5,21 +5,20 @@
  */
 package controller;
 
-import dal.AccountDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.Account;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Hung
  */
-public class AccountController extends HttpServlet {
+public class logout extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,10 +37,10 @@ public class AccountController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AccountController</title>");
+            out.println("<title>Servlet logout</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet AccountController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet logout at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -59,16 +58,18 @@ public class AccountController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String name = request.getParameter("name");
-        String email = request.getParameter("email");
-        String phone = request.getParameter("phone");
-        String address = request.getParameter("address");
-        String password = request.getParameter("password");
-        AccountDAO dao = new AccountDAO();
-        Account c = new Account(email, name, phone, password, address);
-        dao.updateAccount(c);
-        request.getSession().setAttribute("account", c);
-        request.getRequestDispatcher("editaccount.jsp").include(request, response);
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                cookie.setValue("");
+                cookie.setPath("/");
+                cookie.setMaxAge(0);
+                response.addCookie(cookie);
+            }
+        }
+        HttpSession session = request.getSession();
+        session.invalidate();
+        response.setHeader("Refresh", "1; login.jsp");
     }
 
     /**
@@ -82,33 +83,7 @@ public class AccountController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        AccountDAO dao = new AccountDAO();
-        ArrayList<Account> acc = dao.getAllAccounts();
-        String email = request.getParameter("email");
-        String name = request.getParameter("name");
-        String phone = request.getParameter("phone");
-        String password = request.getParameter("password");
-        String confirm_password = request.getParameter("confirm_password");
-        PrintWriter out = response.getWriter();
-        boolean accept = true;
-        for (Account a : acc) {
-            if (a.getEmail().equals(email)) {
-                accept = false;
-                request.setAttribute("create", "Email already in used");
-                request.getRequestDispatcher("login.jsp").include(request, response);
-            }
-            if (!password.equals(confirm_password)) {
-                accept = false;
-                request.setAttribute("create", "Password not match");
-                request.getRequestDispatcher("login.jsp").include(request, response);
-            }
-        }
-        if (accept == true) {
-            Account a = new Account(email, name, phone, password, phone);
-            dao.insertAccount(a);
-            request.setAttribute("create", "Create successfully");
-            request.getRequestDispatcher("login.jsp").include(request, response);
-        }
+        processRequest(request, response);
     }
 
     /**

@@ -82,9 +82,7 @@ public class AccountDAO extends DBContext {
 
     public static void updateAccount(Account c) {
         try {
-            String sql = "UPDATE Account\n"
-                    + "SET name = ?, phone = ?, address= ?, password=? \n"
-                    + "WHERE email= ?";
+            String sql = "UPDATE Account SET name = ?, phone = ?, address= ?, password=? WHERE email= ?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, c.getName());
             statement.setString(2, c.getPhone());

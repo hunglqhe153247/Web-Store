@@ -20,11 +20,12 @@ public class Product {
     String category;
     String imagie;
     String description;
+    String supplier;
 
     public Product() {
     }
 
-    public Product(String id, String name, float price, String unit, String category, String imagie, String description) {
+    public Product(String id, String name, float price, String unit, String category, String imagie, String description, String supplier) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -32,7 +33,18 @@ public class Product {
         this.category = category;
         this.imagie = imagie;
         this.description = description;
+        this.supplier = supplier;
     }
+
+    public String getSupplier() {
+        return supplier;
+    }
+
+    public void setSupplier(String supplier) {
+        this.supplier = supplier;
+    }
+
+    
 
     
 
